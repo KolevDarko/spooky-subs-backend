@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { Subscription } from './subscriptions/entities/subscription.entity';
+import { BlockListenerService } from './block-listener/block-listener.service';
 
 @Module({
   imports: [
@@ -27,6 +28,6 @@ import { Subscription } from './subscriptions/entities/subscription.entity';
     SubscriptionsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, BlockListenerService],
 })
 export class AppModule {}
