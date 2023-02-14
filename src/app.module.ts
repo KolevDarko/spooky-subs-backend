@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
-import { SubscriptionEntity } from './subscriptions/entity/subscription.entity';
+import { Subscription } from './subscriptions/entities/subscription.entity';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { SubscriptionEntity } from './subscriptions/entity/subscription.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [SubscriptionEntity],
+        entities: [Subscription],
         synchronize: true,
       }),
       inject: [ConfigService],
