@@ -5,18 +5,27 @@ export class Subscription {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  vendor: string;
+  @Column({ unique: true })
+  blockchainSubscriptionId: string;
 
   @Column()
-  client: string;
+  payer: string;
 
   @Column()
+  receiver: string;
+
+  @Column({ type: 'decimal' })
   amount: number;
 
   @Column()
-  period: number;
+  token: string;
 
-  @Column({ type: 'date' })
-  next_payout: string;
+  @Column({ type: 'bigint' })
+  payoutPeriod: number;
+
+  @Column({ type: 'bigint' })
+  lastPayout: number;
+
+  @Column()
+  active: boolean;
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 import { Subscription } from './entities/subscription.entity';
 
@@ -12,11 +11,47 @@ export class SubscriptionsService {
     private subscriptionRepository: Repository<Subscription>,
   ) {}
 
-  create(createSubscriptionDto: CreateSubscriptionDto): Promise<Subscription> {
+  create(
+    blockchainSubscriptionId,
+    payer,
+    receiver,
+    amount,
+    token,
+    payoutPeriod,
+    active,
+    lastPayout,
+  ): Promise<Subscription> {
     const newSubscription = this.subscriptionRepository.create({
-      ...createSubscriptionDto,
+      blockchainSubscriptionId,
+      payer,
+      receiver,
+      amount,
+      token,
+      payoutPeriod,
+      active,
+      lastPayout,
     });
     return this.subscriptionRepository.save(newSubscription);
+  }
+
+  async pauseSubscription(
+    blockchainSubscriptionId: string,
+  ): Promise<Subscription> {
+    const sub: Subscription = await this.subscriptionRepository.findOne({
+      where: { blockchainSubscriptionId },
+    });
+    sub.active = false;
+    return this.subscriptionRepository.save(sub);
+  }
+
+  async activateSubscription(
+    blockchainSubscriptionId: string,
+  ): Promise<Subscription> {
+    const sub: Subscription = await this.subscriptionRepository.findOne({
+      where: { blockchainSubscriptionId },
+    });
+    sub.active = true;
+    return this.subscriptionRepository.save(sub);
   }
 
   findAll(): Promise<Subscription[]> {

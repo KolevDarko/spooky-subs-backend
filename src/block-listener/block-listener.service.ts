@@ -1,9 +1,7 @@
-import { Injectable } from '@nestjs/common';
 import type { OnApplicationBootstrap } from '@nestjs/common';
 import { ethers } from 'ethers';
 import { contractInfo } from './contractInfo';
 
-@Injectable()
 export class BlockListenerService implements OnApplicationBootstrap {
   async onApplicationBootstrap() {
     await this.init();

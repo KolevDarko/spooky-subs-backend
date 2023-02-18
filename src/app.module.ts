@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { Subscription } from './subscriptions/entities/subscription.entity';
 import { BlockListenerService } from './block-listener/block-listener.service';
+import { BlockListenerModule } from './block-listener/block-listener.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { BlockListenerService } from './block-listener/block-listener.service';
       inject: [ConfigService],
     }),
     SubscriptionsModule,
+    BlockListenerModule,
   ],
   controllers: [AppController],
   providers: [AppService, BlockListenerService],
