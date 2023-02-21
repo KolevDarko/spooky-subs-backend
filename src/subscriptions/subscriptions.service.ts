@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 import { Subscription } from './entities/subscription.entity';
 
 @Injectable()
@@ -58,15 +57,19 @@ export class SubscriptionsService {
     return this.subscriptionRepository.find();
   }
 
+  findVendorSubscriptions(vendorAddress: string): Promise<Subscription[]> {
+    return this.subscriptionRepository.find({
+      where: { receiver: vendorAddress },
+    });
+  }
+
+  findClientSubscriptions(clientAddress: string): Promise<Subscription[]> {
+    return this.subscriptionRepository.find({
+      where: { payer: clientAddress },
+    });
+  }
+
   findOne(id: number): Promise<Subscription> {
     return this.subscriptionRepository.findOne({ where: { id } });
-  }
-
-  update(id: number, updateSubscriptionDto: UpdateSubscriptionDto) {
-    return this.subscriptionRepository.update(id, updateSubscriptionDto);
-  }
-
-  remove(id: number) {
-    return this.subscriptionRepository.delete(id);
   }
 }

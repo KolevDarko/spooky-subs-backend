@@ -14,4 +14,14 @@ export class SubscriptionsController {
   findOne(@Param('id') id: string) {
     return this.subscriptionsService.findOne(+id);
   }
+
+  @Get('vendor/:vendorAddress')
+  findVendorSubscriptions(@Param('vendorAddress') vendorAddress: string) {
+    return this.subscriptionsService.findVendorSubscriptions(vendorAddress);
+  }
+
+  @Get('client/:clientAddress')
+  findClientSubscriptions(@Param('clientAddress') clientAddress: string) {
+    return this.subscriptionsService.findClientSubscriptions(clientAddress);
+  }
 }
